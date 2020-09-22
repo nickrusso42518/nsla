@@ -13,6 +13,35 @@ from ncclient import manager
 from lxml.etree import fromstring
 
 
+def configure_probes(task, xml_config):
+
+    conn = task.host.get_connection("netconf", task.nornir.config)
+
+    print(f"{task.host.name}: Connection open")
+
+    breakpoint()
+    config_resp = conn.edit_config(
+        target="candidate",
+        config=xml_config,
+    )
+    
+    # Perform validation everywhere to gain network-wide
+    # atomicity as best as we can
+    validate = conn.validate()
+    if not validate.ok:
+        print(validate.xml)
+
+    # Copy from candidate to running config
+    commit = conn.commit()
+    if not commit.ok:
+        print(commit.xml)
+
+    # Copy from running to startup config
+    save = save_config_ios(conn)
+    if not save.ok:
+        print(save.xml)
+
+
 def main():
     """
     Execution begins here.
@@ -31,8 +60,8 @@ def main():
         schedule = build_sla_schedule(v)
         schedule_list.append(schedule)
 
-    print(entry_list)
-    print(schedule_list)
+    #print(entry_list)
+    #print(schedule_list)
 
     wrapper = {
         "config": {
@@ -50,43 +79,13 @@ def main():
             }
         }
     }
-    #print(json.dumps(wrapper, indent=2))
     xml_config = xmltodict.unparse(wrapper, pretty=True)
-    #print(xml_config)
 
-
-    connect_params = {
-        "host": "172.31.43.55",
-        "username": "admin",
-        "password": "admin",
-        "hostkey_verify": False,
-        "allow_agent": False,
-        "look_for_keys": False,
-        #"device_params": {"name": "csr"}
-        #"device_params": {"name": "iosxr"}
-    }
-
-    # Use the dict above as "keyword arguments" to open netconf session
-    with manager.connect(**connect_params) as conn:
-
-        # Gather the current XML configuration and pretty-print it
-        #print(f"{hostname}: Connection open")
-
-        config_resp = conn.edit_config(
-            target="candidate",
-            config=xml_config,
-            #default_operation="replace",
-        )
-        
-        # Perform validation everywhere to gain network-wide
-        # atomicity as best as we can
-        validate = conn.validate()
-
-        # Copy from candidate to running config
-        commit = conn.commit()
-
-        # Copy from running to startup config
-        save_config_ios(conn)
+    print("Generic config completed")
+    print(xml_config)
+    result = nornir.run(task=configure_probes, xml_config=xml_config)
+    breakpoint()
+    print(result)
 
 
 def build_sla_entry(v):

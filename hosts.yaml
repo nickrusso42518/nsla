@@ -1,16 +1,24 @@
 ---
-CSR:
-  hostname: csr.njrusmc.net
+CSR1:
+  hostname: csr1.njrusmc.net
   groups:
     - ios
   data:
     node_id: 101
     ipsla_addr: 10.0.0.101
 
-XRV:
-  hostname: xrv.njrusmc.net
-  groups:
-    - iosxr
-  data:
-    node_id: 102
-    ipsla_addr: 10.0.0.102
+# CSR2:
+#   hostname: csr2.njrusmc.net
+#   groups:
+#     - ios
+#   data:
+#     node_id: 102
+#     ipsla_addr: 10.0.0.102
+
+# XRV9:
+#   hostname: xrv9.njrusmc.net
+#   groups:
+#     - iosxr
+#   data:
+#     node_id: 109
+#     ipsla_addr: 10.0.0.109
