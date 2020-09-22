@@ -1,0 +1,28 @@
+---
+devices:
+  username: admin
+  password: admin
+  connection_options:
+    netconf:
+      extras:
+        allow_agent: false
+        hostkey_verify: false
+        look_for_keys: false
+  data:
+    frequency_s: 60
+    packet_count: 10
+    packet_interval_ms: 20
+    timeout_ms: 5000
+    tos: 184
+    destination_port: 16384
+
+ios:
+  platform: ios
+  groups:
+    - devices
+
+iosxr:
+  platform: iosxr
+  groups:
+    - devices
+...

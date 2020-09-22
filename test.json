@@ -1,0 +1,61 @@
+{
+  "data": {
+    "@xmlns": "urn:ietf:params:xml:ns:netconf:base:1.0",
+    "@xmlns:nc": "urn:ietf:params:xml:ns:netconf:base:1.0",
+    "native": {
+      "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-native",
+      "ip": {
+        "sla": {
+          "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-sla",
+          "responder": null,
+          "entry": [
+            {
+              "number": 101,
+              "udp-jitter": {
+                "dest-addr": "10.0.0.101",
+                "portno": 16384,
+                "num-packets": 10,
+                "interval": 20,
+                "frequency": 60,
+                "timeout": 5000,
+                "tos": 184,
+                "verify-data": "true"
+              }
+            },
+            {
+              "number": 102,
+              "udp-jitter": {
+                "dest-addr": "10.0.0.102",
+                "portno": 16384,
+                "num-packets": 10,
+                "interval": 20,
+                "frequency": 60,
+                "timeout": 5000,
+                "tos": 184,
+                "verify-data": "true"
+              }
+            }
+          ],
+          "schedule": [
+            {
+              "entry-number": 101,
+              "life": "forever",
+              "start-time": {
+                "now-config": null,
+                "now": null
+              }
+            },
+            {
+              "entry-number": 102,
+              "life": "forever",
+              "start-time": {
+                "now-config": null,
+                "now": null
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

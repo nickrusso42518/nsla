@@ -1,0 +1,6 @@
+nornir==3.0.0
+nornir-scrapli
+scrapli-netconf
+pylint
+black
+yamllint
