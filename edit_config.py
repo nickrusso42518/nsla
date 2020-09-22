@@ -19,7 +19,6 @@ def configure_probes(task, xml_config):
 
     print(f"{task.host.name}: Connection open")
 
-    breakpoint()
     config_resp = conn.edit_config(
         target="candidate",
         config=xml_config,
@@ -32,9 +31,13 @@ def configure_probes(task, xml_config):
         print(validate.xml)
 
     # Copy from candidate to running config
-    commit = conn.commit()
-    if not commit.ok:
-        print(commit.xml)
+    try:
+        commit = conn.commit()
+        if not commit.ok:
+            print(commit.xml)
+    except Exception as exc:
+        print(exc)
+        raise
 
     # Copy from running to startup config
     save = save_config_ios(conn)
@@ -99,6 +102,7 @@ def build_sla_entry(v):
             #"source-ip": None, TODO
             "frequency": v["frequency_s"],
             "timeout": v["timeout_ms"],
+            "threshold": v["timeout_ms"],
             "tos": v["tos"],
             "verify-data": "true"
         }
