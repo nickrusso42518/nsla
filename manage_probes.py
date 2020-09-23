@@ -31,13 +31,12 @@ def send_edit_config_rpc(conn, rpc_dict):
         raise
 
 
-def manage_probes(task, merge_sla, rebuild=True):
+def manage_probes(task, merge_sla, replace_mdt, rebuild=True):
     conn = task.host.get_connection("netconf", task.nornir.config)
     print(f"{task.host.name}: Connection established")
 
-    # conn.discard_changes()
+    print(f"{task.host.name}: Locking candidate-config")
     with conn.locked(target="candidate"):
-        print(f"{task.host.name}: Locked candidate-config")
 
         # If we need to rebuild the whole SLA process,
         # perform a bulk delete first
@@ -46,20 +45,23 @@ def manage_probes(task, merge_sla, rebuild=True):
             delete_sla = build_sla.wrapper(operation="delete")
             resp = send_edit_config_rpc(conn, delete_sla)
 
-        # Now, perform the merge operation to add the probes
+        # Perform the merge operation to add the probes
         print(f"{task.host.name}: Configuring probes")
         resp = send_edit_config_rpc(conn, merge_sla)
 
-    print(f"{task.host.name}: Unlocked candidate-config")
+        # Perform the replace operation to update MDT subscriptions
+        print(f"{task.host.name}: Configuring subscriptions")
+        resp = send_edit_config_rpc(conn, replace_mdt)
+
 
     # Perform a final validation on the entire running config
+    print(f"{task.host.name}: Validating running-config")
     conn.validate(source="running")
-    print(f"{task.host.name}: Validated running-config")
 
     # Copy from running to startup config
+    print(f"{task.host.name}: Saving startup-config")
     save_rpc = '<save-config xmlns="http://cisco.com/yang/cisco-ia"/>'
     conn.dispatch(fromstring(save_rpc))
-    print(f"{task.host.name}: Saved startup-config")
 
 
 def main():
@@ -95,11 +97,46 @@ def main():
     )
     print(f"Constructed common SLA config")
 
+    mdt_inputs = nornir.inventory.groups["devices"].data["mdt"]
+    replace_mdt = subscription(mdt_inputs)
+    print(f"Constructed common MDT config")
+
     # Manage the IP SLA probes on each device using the common
     # merge_sla dictionary
     result = nornir.run(
-        task=manage_probes, merge_sla=merge_sla, rebuild=args.rebuild
+        task=manage_probes,
+        merge_sla=merge_sla,
+        replace_mdt=replace_mdt,
+        rebuild=args.rebuild,
     )
+
+
+def subscription(mdt):
+
+    xpath = "/ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry"
+
+    return {
+        "config": {
+            "mdt-config-data": {
+                "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg",
+                "@operation": "replace",
+                "mdt-subscription": {
+                    "subscription-id": mdt["sub_id"],
+                    "base": {
+                        "stream": "yang-push",
+                        "encoding": "encode-kvgpb",
+                        "period": mdt["interval_s"] * 100,
+                        "xpath": xpath,
+                    },
+                    "mdt-receivers": {
+                        "address": mdt["collector_ip_addr"],
+                        "port": mdt["collector_grpc_port"],
+                        "protocol": "grpc-tcp",
+                    },
+                },
+            }
+        }
+    }
 
 
 def process_args():

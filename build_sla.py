@@ -1,26 +1,27 @@
 #!/usr/bin/env python
 
-def entry(v, tag="NA"):
+def entry(attr, tag="NA"):
+    sla = attr["sla"]
     return {
-        "number": v["node_id"],
+        "number": attr["node_id"],
         "udp-jitter": {
-            "dest-addr": v["ipsla_addr"],
-            "portno": v["destination_port"],
-            "num-packets": v["packet_count"],
-            "interval": v["packet_interval_ms"],
+            "dest-addr": attr["ipsla_addr"],
+            "portno": sla["destination_port"],
+            "num-packets": sla["packet_count"],
+            "interval": sla["packet_interval_ms"],
             #"source-ip": None, TODO
-            "frequency": v["frequency_s"],
-            "timeout": v["timeout_ms"],
-            "threshold": v["timeout_ms"],
-            "tos": v["tos"],
+            "frequency": sla["frequency_s"],
+            "timeout": sla["timeout_ms"],
+            "threshold": sla["timeout_ms"],
+            "tos": sla["tos"],
             "verify-data": "true",
             "tag": tag
         }
     }
 
-def schedule(v):
+def schedule(attr):
     return {
-        "entry-number": v["node_id"],
+        "entry-number": attr["node_id"],
         "life": "forever",
         "start-time": {
             "now-config": None,

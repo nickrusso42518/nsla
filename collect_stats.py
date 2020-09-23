@@ -49,6 +49,8 @@ def main():
     sla_xmlns = "http://cisco.com/ns/yang/Cisco-IOS-XE-ip-sla-oper"
     sla_filter = f'<ip-sla-stats xmlns="{sla_xmlns}"></ip-sla-stats>'
 
+
+ip-sla-ios-xe-oper
     result = nornir.run(task=collect_sla_stats, sla_filter=sla_filter)
     breakpoint()
     print(result)
