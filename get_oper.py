@@ -6,53 +6,49 @@ Purpose: Collect the current IP SLA configuration from
 IOS-XE and IOS-XR routers.
 """
 
+from nornir import InitNornir
 from ncclient import manager
 from lxml.etree import tostring
 import xmltodict
 import json
 
 
+def collect_sla_stats(task, sla_filter):
+    conn = task.host.get_connection("netconf", task.nornir.config)
+    print(f"{task.host.name}: Connection open")
+
+    get_resp = conn.get(filter=("subtree", sla_filter))
+    if get_resp.ok:
+        # RPC worked; print the config with header/trailer
+        xml_config = tostring(get_resp.data_ele, pretty_print=True)
+        xml_data =xml_config.decode().strip() 
+        #print(xml_data)
+        data = xmltodict.parse(xml_data)
+        #print(data)
+
+        with open(f"{task.host.name}_sla_stats.json", "w") as handle:
+            json.dump(data, handle, indent=2)
+    else:
+        # RPC failed; print list of errors as a comma-separated list
+        print(f"{hostname}: Errors: {','.join(get_resp.errors)}")
+
 def main():
     """
     Execution starts here.
     """
 
+    # Initialize Nornir and run the manage_config custom task
+    nornir = InitNornir()
+
     # Iterate over the list of hosts (string) defined below.
     # Refreshing the simple "in-line" inventory concept.
-    f = ("subtree", '<ip-sla-stats xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ip-sla-oper"></ip-sla-stats>')
+    sla_xmlns = "http://cisco.com/ns/yang/Cisco-IOS-XE-ip-sla-oper"
+    sla_filter = f'<ip-sla-stats xmlns="{sla_xmlns}"></ip-sla-stats>'
 
-    #csr 172.31.43.55
-    #xr 172.31.95.140
-    for hostname in ["172.31.43.55"]:
-        # Open a new NETCONF connection to each host using kwargs technique
-        connect_params = {
-            "host": hostname,
-            "username": "admin",
-            "password": "admin",
-            "hostkey_verify": False,
-            "allow_agent": False,
-            "look_for_keys": False,
-            #"device_params": {"name": "csr"}
-            #"device_params": {"name": "iosxr"}
-        }
-
-        # Use the dict above as "keyword arguments" to open netconf session
-        with manager.connect(**connect_params) as conn:
-
-            # Gather the current XML configuration and pretty-print it
-            print(f"{hostname}: Connection open")
-            get_resp = conn.get(filter=f)
-            if get_resp.ok:
-                # RPC worked; print the config with header/trailer
-                #print(f"{hostname}: VRF configuration start")
-                xml_config = tostring(get_resp.data_ele, pretty_print=True)
-                x=xml_config.decode().strip() 
-                print(x)
-                print(json.dumps(xmltodict.parse(x), indent=2))
-                #print(f"{hostname}: VRF configuration end")
-            else:
-                # RPC failed; print list of errors as a comma-separated list
-                print(f"{hostname}: Errors: {','.join(get_resp.errors)}")
+    result = nornir.run(task=collect_sla_stats, sla_filter=sla_filter)
+    breakpoint()
+    print(result)
+    
 
 
 if __name__ == "__main__":
