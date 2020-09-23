@@ -55,7 +55,8 @@ def main():
     """
 
     # Initialize Nornir and run the manage_config custom task
-    nornir = InitNornir()
+    init_nornir = InitNornir()
+    nornir = init_nornir.with_processors([ProcTerse(), ProcCSV(), ProcJSON()])
 
     entry_list = []
     schedule_list = []
