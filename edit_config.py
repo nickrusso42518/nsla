@@ -61,7 +61,7 @@ def main():
     schedule_list = []
     for host, v in nornir.inventory.hosts.items():
         print(f"Building SLA entry for {host}")
-        entry = build_sla_entry(v)
+        entry = build_sla_entry(v, tag=host)
         entry_list.append(entry)
 
         schedule = build_sla_schedule(v)
@@ -86,7 +86,7 @@ def main():
     print(result)
 
 
-def build_sla_entry(v):
+def build_sla_entry(v, tag="NA"):
     return {
         "number": v["node_id"],
         "udp-jitter": {
@@ -99,7 +99,8 @@ def build_sla_entry(v):
             "timeout": v["timeout_ms"],
             "threshold": v["timeout_ms"],
             "tos": v["tos"],
-            "verify-data": "true"
+            "verify-data": "true",
+            "tag": tag
         }
     }
 
