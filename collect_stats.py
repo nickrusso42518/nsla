@@ -29,7 +29,7 @@ def collect_sla_stats(task, sla_filter):
         #print(data)
 
         #with open(f"{task.host.name}_sla_stats.json", "w") as handle:
-        #    json.dump(result, handle, indent=2)
+        #    json.dump(data, handle, indent=2)
     else:
         # RPC failed; print list of errors as a comma-separated list
         print(f"{hostname}: Errors: {','.join(get_resp.errors)}")

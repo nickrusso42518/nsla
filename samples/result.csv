@@ -1,0 +1,5 @@
+name_s,host_s,name_d,host_d,oper_id,succ_cnt,fail_cnt,rtt_min,rtt_avg,rtt_max,lat_sd_min,lat_sd_avg,lat_sd_max,lat_ds_min,lat_ds_avg,lat_ds_max,jit_sd_min,jit_sd_avg,jit_sd_max,jit_ds_min,jit_ds_avg,jit_ds_max,pkt_lost_sd,pkt_lost_ds,pkt_wrong_seq,pkt_late,verify_fail
+CSR2,csr2.njrusmc.net,CSR1,csr1.njrusmc.net,101,1,0,2,3,7,0,0,0,0,0,0,0,2,2,0,1,3,0,0,0,0,0
+CSR2,csr2.njrusmc.net,CSR2,csr2.njrusmc.net,102,1,0,1,1,2,1,1,2,0,0,0,0,1,2,0,0,0,0,0,0,0,0
+CSR1,csr1.njrusmc.net,CSR1,csr1.njrusmc.net,101,1,0,1,1,1,0,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0,0
+CSR1,csr1.njrusmc.net,CSR2,csr2.njrusmc.net,102,1,0,1,2,5,0,0,0,0,0,0,0,2,2,0,2,3,0,0,0,0,0

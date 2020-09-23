@@ -1,0 +1,976 @@
+{
+  "CSR2": {
+    "data": {
+      "@xmlns": "urn:ietf:params:xml:ns:netconf:base:1.0",
+      "@xmlns:nc": "urn:ietf:params:xml:ns:netconf:base:1.0",
+      "ip-sla-stats": {
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-ip-sla-oper",
+        "sla-oper-entry": [
+          {
+            "oper-id": "101",
+            "oper-type": "oper-type-udp-jitter",
+            "latest-return-code": "ret-code-ok",
+            "success-count": "1",
+            "failure-count": "0",
+            "latest-oper-start-time": "2020-09-23T16:37:42+00:00",
+            "rtt-info": {
+              "latest-rtt": {
+                "rtt": "3"
+              },
+              "time-to-live": {
+                "forever": null
+              }
+            },
+            "stats": {
+              "rtt": {
+                "rtt-count": "10",
+                "sla-time-values": {
+                  "min": "2",
+                  "avg": "3",
+                  "max": "7",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "oneway-latency": {
+                "sample-count": "0",
+                "sd": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-sd": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-ds": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "jitter": {
+                "sd-sample-count": "9",
+                "ds-sample-count": "9",
+                "sd": {
+                  "min": "0",
+                  "avg": "2",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "0",
+                  "avg": "1",
+                  "max": "3",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-sd": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-sd": {
+                  "num": "3",
+                  "sum": "5",
+                  "sum-square": "9",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-sd": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-sd": {
+                  "num": "3",
+                  "sum": "5",
+                  "sum-square": "9",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-ds": {
+                  "min": "1",
+                  "avg": "2",
+                  "max": "3",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-ds": {
+                  "num": "2",
+                  "sum": "4",
+                  "sum-square": "10",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-ds": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-ds": {
+                  "num": "4",
+                  "sum": "5",
+                  "sum-square": "7",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "inter-arrival-jitter-out": "0",
+                "inter-arrival-jitter-in": "0",
+                "avg-jitter": "2"
+              },
+              "over-threshold": {
+                "rtt-count": "0",
+                "percent": "0"
+              },
+              "packet-loss": {
+                "sd-count": "0",
+                "sd-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "ds-count": "0",
+                "ds-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "out-of-sequence": "0",
+                "drops": "0",
+                "late-arrivals": "0",
+                "skipped-packets": "0"
+              },
+              "voice-score": {
+                "icpif": "0",
+                "mos": "0"
+              },
+              "percentile-stats": {
+                "percentile-rtt-stats": {
+                  "percentile-samples": "0",
+                  "percentile-values": {
+                    "min": "0",
+                    "avg": "0",
+                    "max": "0",
+                    "accuracy": "accuracy-milliseconds"
+                  }
+                },
+                "percentile-ow-stats": {
+                  "percentile-ow-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-ow-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                },
+                "percentile-jitter-stats": {
+                  "percentile-jitter-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-jitter-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                }
+              }
+            },
+            "threshold-occured": "false",
+            "common-stats": {
+              "no-of-disconnects": "0",
+              "no-of-timeouts": "0",
+              "no-of-busies": "0",
+              "no-of-no-connections": "0",
+              "no-of-internal-errors": "0",
+              "no-of-sequence-errors": "0",
+              "no-of-verify-errors": "0",
+              "no-of-ctrl-enable-errors": "0",
+              "no-of-stats-retrieve-errors": "0"
+            }
+          },
+          {
+            "oper-id": "102",
+            "oper-type": "oper-type-udp-jitter",
+            "latest-return-code": "ret-code-ok",
+            "success-count": "1",
+            "failure-count": "0",
+            "latest-oper-start-time": "2020-09-23T16:37:37+00:00",
+            "rtt-info": {
+              "latest-rtt": {
+                "rtt": "1"
+              },
+              "time-to-live": {
+                "forever": null
+              }
+            },
+            "stats": {
+              "rtt": {
+                "rtt-count": "10",
+                "sla-time-values": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "oneway-latency": {
+                "sample-count": "2",
+                "sd": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-sd": {
+                  "num": "0",
+                  "sum": "3",
+                  "sum-square": "5",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-ds": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "jitter": {
+                "sd-sample-count": "9",
+                "ds-sample-count": "9",
+                "sd": {
+                  "min": "0",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-sd": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-sd": {
+                  "num": "1",
+                  "sum": "1",
+                  "sum-square": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-sd": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-sd": {
+                  "num": "2",
+                  "sum": "3",
+                  "sum-square": "5",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-ds": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-ds": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-ds": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-ds": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "inter-arrival-jitter-out": "0",
+                "inter-arrival-jitter-in": "0",
+                "avg-jitter": "1"
+              },
+              "over-threshold": {
+                "rtt-count": "0",
+                "percent": "0"
+              },
+              "packet-loss": {
+                "sd-count": "0",
+                "sd-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "ds-count": "0",
+                "ds-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "out-of-sequence": "0",
+                "drops": "0",
+                "late-arrivals": "0",
+                "skipped-packets": "0"
+              },
+              "voice-score": {
+                "icpif": "0",
+                "mos": "0"
+              },
+              "percentile-stats": {
+                "percentile-rtt-stats": {
+                  "percentile-samples": "0",
+                  "percentile-values": {
+                    "min": "0",
+                    "avg": "0",
+                    "max": "0",
+                    "accuracy": "accuracy-milliseconds"
+                  }
+                },
+                "percentile-ow-stats": {
+                  "percentile-ow-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-ow-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                },
+                "percentile-jitter-stats": {
+                  "percentile-jitter-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-jitter-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                }
+              }
+            },
+            "threshold-occured": "false",
+            "common-stats": {
+              "no-of-disconnects": "0",
+              "no-of-timeouts": "0",
+              "no-of-busies": "0",
+              "no-of-no-connections": "0",
+              "no-of-internal-errors": "0",
+              "no-of-sequence-errors": "0",
+              "no-of-verify-errors": "0",
+              "no-of-ctrl-enable-errors": "0",
+              "no-of-stats-retrieve-errors": "0"
+            }
+          }
+        ],
+        "sla-oper-error-statistics": [
+          {
+            "oper-id": "101",
+            "start-time-id": "7210209",
+            "path-index": "1",
+            "hop-index": "1",
+            "num-of-disconnects": "0",
+            "num-of-timeouts": "0",
+            "num-of-busies": "0",
+            "num-of-no-connections": "0",
+            "num-of-drops": "0",
+            "num-of-sequence-errors": "0",
+            "num-of-verify-errors": "0",
+            "target-address": "10.0.0.101",
+            "num-of-ctrl-enable-errors": "0",
+            "num-of-stats-retrieve-errors": "0"
+          },
+          {
+            "oper-id": "102",
+            "start-time-id": "7209709",
+            "path-index": "1",
+            "hop-index": "1",
+            "num-of-disconnects": "0",
+            "num-of-timeouts": "0",
+            "num-of-busies": "0",
+            "num-of-no-connections": "0",
+            "num-of-drops": "0",
+            "num-of-sequence-errors": "0",
+            "num-of-verify-errors": "0",
+            "target-address": "10.0.0.102",
+            "num-of-ctrl-enable-errors": "0",
+            "num-of-stats-retrieve-errors": "0"
+          }
+        ],
+        "sla-oper-total-statistics": [
+          {
+            "oper-id": "101",
+            "start-time-id": "7210209",
+            "total-elapsed-time": "3565",
+            "total-initiations": "1"
+          },
+          {
+            "oper-id": "102",
+            "start-time-id": "7209709",
+            "total-elapsed-time": "4065",
+            "total-initiations": "1"
+          }
+        ]
+      }
+    }
+  },
+  "CSR1": {
+    "data": {
+      "@xmlns": "urn:ietf:params:xml:ns:netconf:base:1.0",
+      "@xmlns:nc": "urn:ietf:params:xml:ns:netconf:base:1.0",
+      "ip-sla-stats": {
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-ip-sla-oper",
+        "sla-oper-entry": [
+          {
+            "oper-id": "101",
+            "oper-type": "oper-type-udp-jitter",
+            "latest-return-code": "ret-code-ok",
+            "success-count": "1",
+            "failure-count": "0",
+            "latest-oper-start-time": "2020-09-23T16:37:34+00:00",
+            "rtt-info": {
+              "latest-rtt": {
+                "rtt": "1"
+              },
+              "time-to-live": {
+                "forever": null
+              }
+            },
+            "stats": {
+              "rtt": {
+                "rtt-count": "10",
+                "sla-time-values": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "1",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "oneway-latency": {
+                "sample-count": "1",
+                "sd": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-sd": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-ds": {
+                  "num": "0",
+                  "sum": "1",
+                  "sum-square": "1",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "jitter": {
+                "sd-sample-count": "9",
+                "ds-sample-count": "9",
+                "sd": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "0",
+                  "avg": "1",
+                  "max": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-sd": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-sd": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-sd": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-sd": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-ds": {
+                  "min": "1",
+                  "avg": "0",
+                  "max": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-ds": {
+                  "num": "1",
+                  "sum": "1",
+                  "sum-square": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-ds": {
+                  "min": "1",
+                  "avg": "0",
+                  "max": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-ds": {
+                  "num": "1",
+                  "sum": "1",
+                  "sum-square": "1",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "inter-arrival-jitter-out": "0",
+                "inter-arrival-jitter-in": "0",
+                "avg-jitter": "1"
+              },
+              "over-threshold": {
+                "rtt-count": "0",
+                "percent": "0"
+              },
+              "packet-loss": {
+                "sd-count": "0",
+                "sd-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "ds-count": "0",
+                "ds-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "out-of-sequence": "0",
+                "drops": "0",
+                "late-arrivals": "0",
+                "skipped-packets": "0"
+              },
+              "voice-score": {
+                "icpif": "0",
+                "mos": "0"
+              },
+              "percentile-stats": {
+                "percentile-rtt-stats": {
+                  "percentile-samples": "0",
+                  "percentile-values": {
+                    "min": "0",
+                    "avg": "0",
+                    "max": "0",
+                    "accuracy": "accuracy-milliseconds"
+                  }
+                },
+                "percentile-ow-stats": {
+                  "percentile-ow-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-ow-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                },
+                "percentile-jitter-stats": {
+                  "percentile-jitter-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-jitter-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                }
+              }
+            },
+            "threshold-occured": "false",
+            "common-stats": {
+              "no-of-disconnects": "0",
+              "no-of-timeouts": "0",
+              "no-of-busies": "0",
+              "no-of-no-connections": "0",
+              "no-of-internal-errors": "0",
+              "no-of-sequence-errors": "0",
+              "no-of-verify-errors": "0",
+              "no-of-ctrl-enable-errors": "0",
+              "no-of-stats-retrieve-errors": "0"
+            }
+          },
+          {
+            "oper-id": "102",
+            "oper-type": "oper-type-udp-jitter",
+            "latest-return-code": "ret-code-ok",
+            "success-count": "1",
+            "failure-count": "0",
+            "latest-oper-start-time": "2020-09-23T16:37:34+00:00",
+            "rtt-info": {
+              "latest-rtt": {
+                "rtt": "2"
+              },
+              "time-to-live": {
+                "forever": null
+              }
+            },
+            "stats": {
+              "rtt": {
+                "rtt-count": "10",
+                "sla-time-values": {
+                  "min": "1",
+                  "avg": "2",
+                  "max": "5",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "oneway-latency": {
+                "sample-count": "0",
+                "sd": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "0",
+                  "avg": "0",
+                  "max": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-sd": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-ow-ds": {
+                  "num": "0",
+                  "sum": "0",
+                  "sum-square": "0",
+                  "accuracy": "accuracy-milliseconds"
+                }
+              },
+              "jitter": {
+                "sd-sample-count": "9",
+                "ds-sample-count": "9",
+                "sd": {
+                  "min": "0",
+                  "avg": "2",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "ds": {
+                  "min": "0",
+                  "avg": "2",
+                  "max": "3",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-sd": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-sd": {
+                  "num": "4",
+                  "sum": "6",
+                  "sum-square": "10",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-sd": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-sd": {
+                  "num": "4",
+                  "sum": "5",
+                  "sum-square": "7",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "pos-jitter-ds": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "3",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-pos-jitter-ds": {
+                  "num": "4",
+                  "sum": "6",
+                  "sum-square": "12",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "neg-jitter-ds": {
+                  "min": "1",
+                  "avg": "1",
+                  "max": "2",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "sum-neg-jitter-ds": {
+                  "num": "4",
+                  "sum": "6",
+                  "sum-square": "10",
+                  "accuracy": "accuracy-milliseconds"
+                },
+                "inter-arrival-jitter-out": "0",
+                "inter-arrival-jitter-in": "0",
+                "avg-jitter": "2"
+              },
+              "over-threshold": {
+                "rtt-count": "0",
+                "percent": "0"
+              },
+              "packet-loss": {
+                "sd-count": "0",
+                "sd-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "ds-count": "0",
+                "ds-loss": {
+                  "loss-period-count": "0",
+                  "loss-period-len-min": "0",
+                  "loss-period-len-max": "0",
+                  "inter-loss-period-len-min": "0",
+                  "inter-loss-period-len-max": "0"
+                },
+                "out-of-sequence": "0",
+                "drops": "0",
+                "late-arrivals": "0",
+                "skipped-packets": "0"
+              },
+              "voice-score": {
+                "icpif": "0",
+                "mos": "0"
+              },
+              "percentile-stats": {
+                "percentile-rtt-stats": {
+                  "percentile-samples": "0",
+                  "percentile-values": {
+                    "min": "0",
+                    "avg": "0",
+                    "max": "0",
+                    "accuracy": "accuracy-milliseconds"
+                  }
+                },
+                "percentile-ow-stats": {
+                  "percentile-ow-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-ow-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                },
+                "percentile-jitter-stats": {
+                  "percentile-jitter-sd": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  },
+                  "percentile-jitter-ds": {
+                    "percentile-samples": "0",
+                    "percentile-values": {
+                      "min": "0",
+                      "avg": "0",
+                      "max": "0",
+                      "accuracy": "accuracy-milliseconds"
+                    }
+                  }
+                }
+              }
+            },
+            "threshold-occured": "false",
+            "common-stats": {
+              "no-of-disconnects": "0",
+              "no-of-timeouts": "0",
+              "no-of-busies": "0",
+              "no-of-no-connections": "0",
+              "no-of-internal-errors": "0",
+              "no-of-sequence-errors": "0",
+              "no-of-verify-errors": "0",
+              "no-of-ctrl-enable-errors": "0",
+              "no-of-stats-retrieve-errors": "0"
+            }
+          }
+        ],
+        "sla-oper-error-statistics": [
+          {
+            "oper-id": "101",
+            "start-time-id": "7902863",
+            "path-index": "1",
+            "hop-index": "1",
+            "num-of-disconnects": "0",
+            "num-of-timeouts": "0",
+            "num-of-busies": "0",
+            "num-of-no-connections": "0",
+            "num-of-drops": "0",
+            "num-of-sequence-errors": "0",
+            "num-of-verify-errors": "0",
+            "target-address": "10.0.0.101",
+            "num-of-ctrl-enable-errors": "0",
+            "num-of-stats-retrieve-errors": "0"
+          },
+          {
+            "oper-id": "102",
+            "start-time-id": "7902864",
+            "path-index": "1",
+            "hop-index": "1",
+            "num-of-disconnects": "0",
+            "num-of-timeouts": "0",
+            "num-of-busies": "0",
+            "num-of-no-connections": "0",
+            "num-of-drops": "0",
+            "num-of-sequence-errors": "0",
+            "num-of-verify-errors": "0",
+            "target-address": "10.0.0.102",
+            "num-of-ctrl-enable-errors": "0",
+            "num-of-stats-retrieve-errors": "0"
+          }
+        ],
+        "sla-oper-total-statistics": [
+          {
+            "oper-id": "101",
+            "start-time-id": "7902863",
+            "total-elapsed-time": "4057",
+            "total-initiations": "1"
+          },
+          {
+            "oper-id": "102",
+            "start-time-id": "7902864",
+            "total-elapsed-time": "4056",
+            "total-initiations": "1"
+          }
+        ]
+      }
+    }
+  }
+}

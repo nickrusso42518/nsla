@@ -9,10 +9,10 @@ devices:
         hostkey_verify: false
         look_for_keys: false
   data:
-    frequency_s: 30
-    packet_count: 20
-    packet_interval_ms: 30
-    timeout_ms: 4000
+    frequency_s: 62
+    packet_count: 10
+    packet_interval_ms: 20
+    timeout_ms: 5000
     tos: 184
     destination_port: 16384
 

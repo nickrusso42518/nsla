@@ -22,10 +22,10 @@ class ProcCSV(ProcBase):
         to hold the results.
         """
         self.columns = [
-            "src_host",
-            "src_ip",
-            "dst_host",
-            "dst_ip",
+            "name_s",
+            "host_s",
+            "name_d",
+            "host_d",
             "oper_id",
             "succ_cnt",
             "fail_cnt",
@@ -72,11 +72,21 @@ class ProcCSV(ProcBase):
         sla_list = mresult[0].result["data"]["ip-sla-stats"]["sla-oper-entry"]
         for sla_entry in sla_list:
 
-            # Create row with src/dest info TODO
-            row = ["src_host", "src_ip", "dst_host", "dst_ip"]
+            # Create row with source name and host/IP
+            row = [task.host.name, task.host.hostname]
+
+            # Based on the SLA ID, find the target name and host/IP
+            target_id = int(sla_entry["oper-id"])
+            for k, v in task.nornir.inventory.hosts.items():
+                if v["node_id"] == target_id:
+                    row.extend([k, v.hostname])
+                    break
+            else:
+                # Should be impossible, but prevent an error by using a filler
+                row.extend(["UNK", "UNK"])
 
             # Capture high-level SLA stats
-            row.append(sla_entry["oper-id"])
+            row.append(target_id)
             row.append(sla_entry["success-count"])
             row.append(sla_entry["failure-count"])
         

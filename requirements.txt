@@ -1,6 +1,6 @@
-nornir==3.0.0
-nornir-scrapli
-scrapli-netconf
+nornir==2.5.0
+ncclient
 pylint
 black
 yamllint
+xmltodict
