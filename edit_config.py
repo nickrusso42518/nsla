@@ -13,31 +13,35 @@ from ncclient import manager
 from lxml.etree import fromstring
 
 
-def configure_probes(task, xml_config):
+def configure_probes(task, rpc_list):
 
     conn = task.host.get_connection("netconf", task.nornir.config)
 
     print(f"{task.host.name}: Connection open")
 
-    config_resp = conn.edit_config(
-        target="candidate",
-        config=xml_config,
-    )
+    #breakpoint()
+    for xml_config in rpc_list:
+        config_resp = conn.edit_config(
+            target="candidate",
+            config=xml_config,
+        )
     
-    # Perform validation everywhere to gain network-wide
-    # atomicity as best as we can
-    validate = conn.validate()
-    if not validate.ok:
-        print(validate.xml)
+        # Perform validation everywhere to gain network-wide
+        # atomicity as best as we can
+        validate = conn.validate(source="candidate")
+        if not validate.ok:
+            print(validate.xml)
+    
+        # Copy from candidate to running config
+        try:
+            commit = conn.commit()
+            if not commit.ok:
+                print(commit.xml)
+        except Exception as exc:
+            print(exc)
+            raise
 
-    # Copy from candidate to running config
-    try:
-        commit = conn.commit()
-        if not commit.ok:
-            print(commit.xml)
-    except Exception as exc:
-        print(exc)
-        raise
+    validate = conn.validate(source="running")
 
     # Copy from running to startup config
     save = save_config_ios(conn)
@@ -66,28 +70,19 @@ def main():
     #print(entry_list)
     #print(schedule_list)
 
-    wrapper = {
-        "config": {
-            "native": {
-                "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-native",
-                "ip": {
-                    "sla": {
-                        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-sla",
-                        "@operation": "replace",
-                        "responder": None,
-                        "entry": entry_list,
-                        "schedule": schedule_list
-                    }
-                }
-            }
-        }
-    }
-    xml_config = xmltodict.unparse(wrapper, pretty=True)
+    rebuild = True
+    rpc_list = []
+    if rebuild:
+        delete_sla = build_sla_wrapper(operation="delete")
+        rpc_list.append(delete_sla)
+
+    replace_sla = build_sla_wrapper(operation="merge", entry=entry_list, schedule=schedule_list, responder=None)
+    rpc_list.append(replace_sla)
+    
 
     print("Generic config completed")
-    print(xml_config)
-    result = nornir.run(task=configure_probes, xml_config=xml_config)
-    breakpoint()
+    #print(xml_config)
+    result = nornir.run(task=configure_probes, rpc_list=rpc_list)
     print(result)
 
 
@@ -129,6 +124,26 @@ def save_config_ios(conn):
 
     # Return the RPC response
     return save_resp
+
+def build_sla_wrapper(operation, **kwargs):
+    sla = {
+        "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-sla",
+        "@operation":operation,
+    }
+    sla.update(kwargs)
+
+    wrapper = {
+        "config": {
+            "native": {
+                "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-native",
+                "ip": {
+                    "sla": sla
+                }
+            }
+        }
+    }
+    xml_config = xmltodict.unparse(wrapper, pretty=True)
+    return xml_config
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ devices:
     frequency_s: 30
     packet_count: 20
     packet_interval_ms: 30
-    timeout_ms: 3000
+    timeout_ms: 4000
     tos: 184
     destination_port: 16384
 
