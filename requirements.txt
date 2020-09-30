@@ -1,4 +1,5 @@
 nornir==2.5.0
+grafana_api
 ncclient
 pylint
 black

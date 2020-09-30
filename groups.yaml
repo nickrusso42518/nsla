@@ -1,7 +1,7 @@
 ---
 devices:
-  username: admin
-  password: admin
+  username: "admin"
+  password: "admin"
   connection_options:
     netconf:
       extras:
@@ -14,22 +14,21 @@ devices:
       packet_count: 10
       packet_interval_ms: 20
       timeout_ms: 5000
-      tos: 184
+      tos: 184  # DSCP EF (46)
       destination_port: 16384
     mdt:
       sub_id: 100
       interval_s: 60
-      collector_ip_addr: 172.31.46.67
-      #collector_ip_addr: ~
+      collector_ip_addr: "172.31.46.67"
       collector_grpc_port: 42518
 
 ios:
-  platform: ios
+  platform: "ios"
   groups:
-    - devices
+    - "devices"
 
 iosxr:
-  platform: iosxr
+  platform: "iosxr"
   groups:
-    - devices
+    - "devices"
 ...

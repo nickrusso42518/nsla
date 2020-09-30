@@ -21,6 +21,8 @@ class ProcCSV(ProcBase):
         Constructor defines a string containing column headers
         to hold the results.
         """
+
+        # Identify the columns in the CSV file
         self.columns = [
             "name_s",
             "host_s",
@@ -58,6 +60,8 @@ class ProcCSV(ProcBase):
         data to an output file.
         """
         super().task_completed(task, aresult)
+
+        # Operate a new CSV and write the SLA rows into it
         with open("outputs/result.csv", "w") as handle:
             sla_writer = csv.writer(handle)
             for row in self.matrix:
@@ -69,6 +73,9 @@ class ProcCSV(ProcBase):
         the CSV rows based on the results, and append them to
         the text string for use later.
         """
+        # pylint: disable=unused-argument
+
+        # Extract the SLA list and iterate over it
         sla_list = mresult[0].result["data"]["ip-sla-stats"]["sla-oper-entry"]
         for sla_entry in sla_list:
 
@@ -77,9 +84,9 @@ class ProcCSV(ProcBase):
 
             # Based on the SLA ID, find the target name and host/IP
             target_id = int(sla_entry["oper-id"])
-            for k, v in task.nornir.inventory.hosts.items():
-                if v["node_id"] == target_id:
-                    row.extend([k, v.hostname])
+            for hostname, attr in task.nornir.inventory.hosts.items():
+                if attr["node_id"] == target_id:
+                    row.extend([hostname, attr.hostname])
                     break
             else:
                 # Should be impossible, but prevent an error by using a filler
@@ -89,13 +96,13 @@ class ProcCSV(ProcBase):
             row.append(target_id)
             row.append(sla_entry["success-count"])
             row.append(sla_entry["failure-count"])
-        
+
             # Capture RTT performance stats
             stats = sla_entry["stats"]
             row.append(stats["rtt"]["sla-time-values"]["min"])
             row.append(stats["rtt"]["sla-time-values"]["avg"])
             row.append(stats["rtt"]["sla-time-values"]["max"])
-        
+
             # Capture one-way latency performance stats (needs NTP)
             row.append(stats["oneway-latency"]["sd"]["min"])
             row.append(stats["oneway-latency"]["sd"]["avg"])
@@ -103,7 +110,7 @@ class ProcCSV(ProcBase):
             row.append(stats["oneway-latency"]["ds"]["min"])
             row.append(stats["oneway-latency"]["ds"]["avg"])
             row.append(stats["oneway-latency"]["ds"]["max"])
-        
+
             # Capture jitter performance stats
             row.append(stats["jitter"]["sd"]["min"])
             row.append(stats["jitter"]["sd"]["avg"])
@@ -111,13 +118,13 @@ class ProcCSV(ProcBase):
             row.append(stats["jitter"]["ds"]["min"])
             row.append(stats["jitter"]["ds"]["avg"])
             row.append(stats["jitter"]["ds"]["max"])
-        
+
             # Capture packet loss performance stats
             row.append(stats["packet-loss"]["sd-count"])
             row.append(stats["packet-loss"]["ds-count"])
             row.append(stats["packet-loss"]["out-of-sequence"])
             row.append(stats["packet-loss"]["late-arrivals"])
-        
+
             # Capture data verification error stats
             row.append(sla_entry["common-stats"]["no-of-verify-errors"])
 

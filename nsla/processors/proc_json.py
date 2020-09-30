@@ -7,7 +7,6 @@ results in JSON format.
 """
 
 import json
-import xmltodict
 from nsla.processors.proc_base import ProcBase
 
 
@@ -39,4 +38,5 @@ class ProcJSON(ProcBase):
         the JSON dictionaries based on the results, and update
         the main data dictionary for use later.
         """
+        # pylint: disable=unused-argument
         self.data[host.name] = mresult[0].result

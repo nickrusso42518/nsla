@@ -2,67 +2,16 @@
 
 """
 Author: Nick Russo
-Purpose: Demonstrate NETCONF on IOS-XE and IOS-XR coupled
-with Nornir to update VRF route-target configurations.
+Purpose: Manage IP SLA probes and MDT subscriptions.
 """
 
 import argparse
 from nornir import InitNornir
 from ncclient.operations.rpc import RPCError
-from lxml.etree import fromstring
+from lxml.etree import fromstring  # pylint: disable=no-name-in-module
 import xmltodict
 from nsla import build_sla, build_mdt
 from nsla.processors import ProcGrafanaDashboard
-
-
-def send_edit_config_rpc(conn, rpc_dict):
-    xml_config = xmltodict.unparse(rpc_dict, pretty=True)
-    config_resp = conn.edit_config(
-        target="candidate",
-        config=xml_config,
-    )
-
-    # Copy from candidate to running config
-    try:
-        conn.validate(source="candidate")
-        return conn.commit()
-    except RPCError as rpc_error:
-        conn.discard_changes()
-        print(rpc_error.xml)
-        raise
-
-
-def manage_probes(task, merge_sla, replace_mdt, rebuild=True):
-    conn = task.host.get_connection("netconf", task.nornir.config)
-    print(f"{task.host.name}: Connection established")
-
-    print(f"{task.host.name}: Locking candidate-config")
-    with conn.locked(target="candidate"):
-
-        # If we need to rebuild the whole SLA process,
-        # perform a bulk delete first
-        if rebuild:
-            print(f"{task.host.name}: Deleting probes")
-            delete_sla = build_sla.wrapper(operation="delete")
-            resp = send_edit_config_rpc(conn, delete_sla)
-
-        # Perform the merge operation to add the probes
-        print(f"{task.host.name}: Configuring probes")
-        resp = send_edit_config_rpc(conn, merge_sla)
-
-        # Perform the replace operation to update MDT subscriptions
-        print(f"{task.host.name}: Configuring subscriptions")
-        resp = send_edit_config_rpc(conn, replace_mdt)
-
-
-    # Perform a final validation on the entire running config
-    print(f"{task.host.name}: Validating running-config")
-    conn.validate(source="running")
-
-    # Copy from running to startup config
-    print(f"{task.host.name}: Saving startup-config")
-    save_rpc = '<save-config xmlns="http://cisco.com/yang/cisco-ia"/>'
-    conn.dispatch(fromstring(save_rpc))
 
 
 def main():
@@ -101,15 +50,16 @@ def main():
         schedule=schedule_list,
         responder=None,
     )
-    print(f"Constructed common SLA config")
+    print("Constructed common SLA config")
 
+    # The MDT config is simpler and more static. Build that next
     mdt_inputs = nornir.inventory.groups["devices"].data["mdt"]
     replace_mdt = build_mdt.subscription(mdt_inputs)
-    print(f"Constructed common MDT config")
+    print("Constructed common MDT config")
 
     # Manage the IP SLA probes on each device using the common
-    # merge_sla dictionary
-    result = nornir.run(
+    # merge_sla and replace_mdt dictionaries
+    nornir.run(
         task=manage_probes,
         merge_sla=merge_sla,
         replace_mdt=replace_mdt,
@@ -118,6 +68,9 @@ def main():
 
 
 def process_args():
+    """
+    Process CLI arguments and return them for use in the script.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-r",
@@ -126,6 +79,72 @@ def process_args():
         action="store_true",
     )
     return parser.parse_args()
+
+
+def send_edit_config_rpc(conn, rpc_dict):
+    """
+    Helper function to send an edit_config RPC followed by
+    validation and commit. Unfortunately, some IP SLA features
+    require this relatively complex process and sending multiple
+    edit_config RPCs with a single validate/commit does not
+    always work.
+    """
+
+    # Convert Python dict to XML text
+    xml_config = xmltodict.unparse(rpc_dict, pretty=True)
+    conn.edit_config(
+        target="candidate",
+        config=xml_config,
+    )
+
+    # Copy from candidate to running config
+    try:
+        conn.validate(source="candidate")
+        return conn.commit()
+    except RPCError as rpc_error:
+        # Failure occurred; discard the change, print the error, and
+        # raise the error again to crash the program with stack trace
+        conn.discard_changes()
+        print(rpc_error.xml)
+        raise
+
+
+def manage_probes(task, merge_sla, replace_mdt, rebuild=False):
+    """
+    Nornir grouped task to manage SLA operations and MDT subscriptions.
+    When rebuild is True, this deletes the existing IP SLA probes,
+    then recreates and restarts them. This is the only way to modify
+    an already-existing IP SLA probe.
+    """
+
+    # Establish NETCONF connection
+    conn = task.host.get_connection("netconf", task.nornir.config)
+    print(f"{task.host.name}: Connection established")
+
+    # Obtain a lock on the candidate datastore to prevent other
+    # NETCONF users from making concurrent changes
+    print(f"{task.host.name}: Locking candidate-config")
+    with conn.locked(target="candidate"):
+
+        # If we need to rebuild the whole SLA process,
+        # perform a bulk delete first
+        if rebuild:
+            print(f"{task.host.name}: Deleting probes")
+            delete_sla = build_sla.wrapper(operation="delete")
+            send_edit_config_rpc(conn, delete_sla)
+
+        # Perform the merge operation to add the probes
+        print(f"{task.host.name}: Configuring probes")
+        send_edit_config_rpc(conn, merge_sla)
+
+        # Perform the replace operation to update MDT subscriptions
+        print(f"{task.host.name}: Configuring subscriptions")
+        send_edit_config_rpc(conn, replace_mdt)
+
+    # Copy from running to startup config
+    print(f"{task.host.name}: Saving startup-config")
+    save_rpc = '<save-config xmlns="http://cisco.com/yang/cisco-ia"/>'
+    conn.dispatch(fromstring(save_rpc))
 
 
 if __name__ == "__main__":

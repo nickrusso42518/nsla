@@ -1,9 +1,22 @@
 #!/usr/bin/env python
 
-def subscription(mdt):
+"""
+Author: Nick Russo
+Purpose: Define helper functions related to NETCONF payloads
+for model driven telemetry (MDT).
+"""
 
+
+def subscription(mdt):
+    """
+    Build an MDT subscript payload for the SLA operations data.
+    """
+
+    # Define xpath for the data required
     xpath = "/ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry"
 
+    # Assemble the complete RPC body using a replace operation to ensure
+    # idempotent behavior of the subscriptions
     return {
         "config": {
             "mdt-config-data": {

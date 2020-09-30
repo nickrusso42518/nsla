@@ -15,6 +15,8 @@ class ProcBase:
     Defines stub methods to reduce copy/paste burden on children.
     """
 
+    # pylint: disable=unnecessary-pass
+
     def task_started(self, task):
         """
         Runs when a task begins.

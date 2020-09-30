@@ -7,10 +7,9 @@ results in JSON format.
 """
 
 import json
-import xmltodict
+from jinja2 import Environment, FileSystemLoader
 from grafana_api.grafana_face import GrafanaFace
 from nsla.processors.proc_base import ProcBase
-from jinja2 import Environment, FileSystemLoader
 
 
 class ProcGrafanaDashboard(ProcBase):
@@ -19,14 +18,14 @@ class ProcGrafanaDashboard(ProcBase):
     for the JSON format.
     """
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self, host=None, user="admin", password="admin", port=3000):
-        """
-        """
+        """"""
 
         # Create the GrafanaFace object to interface with the API
         self.grafana_api = GrafanaFace(
-            host=host,
-            auth=(user, password), port=port
+            host=host, auth=(user, password), port=port
         )
 
     def task_instance_completed(self, task, host, mresult):
@@ -34,6 +33,7 @@ class ProcGrafanaDashboard(ProcBase):
         When each host finishes running the task, assemble
         the Grafana dashboards then create/update them via the API.
         """
+        # pylint: disable=too-many-locals,unused-argument
 
         # Build a jinja2 environment referencing the templates directory
         j2_env = Environment(
@@ -46,13 +46,13 @@ class ProcGrafanaDashboard(ProcBase):
         panels = []
 
         # Build panels first, one per inventory host
-        for k, v in task.nornir.inventory.hosts.items():
+        for remote_host, remote_attr in task.nornir.inventory.hosts.items():
 
             # Define data variables for jinja2 templates
             data = {
                 "local_hostname": host.name,
-                "remote_hostname": k,
-                "remote_node_id": v["node_id"],
+                "remote_hostname": remote_host,
+                "remote_node_id": remote_attr["node_id"],
                 # "local_node_id": host["node_id"],  # not used; maybe later
             }
 
