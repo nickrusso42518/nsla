@@ -11,7 +11,8 @@ from nornir import InitNornir
 from ncclient.operations.rpc import RPCError
 from lxml.etree import fromstring
 import xmltodict
-import build_sla
+from nsla import build_sla, build_mdt
+from nsla.processors import ProcGrafanaDashboard
 
 
 def send_edit_config_rpc(conn, rpc_dict):
@@ -69,9 +70,14 @@ def main():
     Execution begins here.
     """
 
-    # Initialize Nornir and process CLI arguments
+    # Initialize Nornir, process CLI args, and extract the collector IP address
     nornir = InitNornir()
     args = process_args()
+    mdt_rx = nornir.inventory.groups["devices"]["mdt"]["collector_ip_addr"]
+
+    # Register the Grafana processor to create dashboards if receiver exists
+    if mdt_rx:
+        nornir = nornir.with_processors([ProcGrafanaDashboard(mdt_rx)])
 
     # Initialize empty lists and iterate over entire inventory
     entry_list = []
@@ -98,7 +104,7 @@ def main():
     print(f"Constructed common SLA config")
 
     mdt_inputs = nornir.inventory.groups["devices"].data["mdt"]
-    replace_mdt = subscription(mdt_inputs)
+    replace_mdt = build_mdt.subscription(mdt_inputs)
     print(f"Constructed common MDT config")
 
     # Manage the IP SLA probes on each device using the common
@@ -109,34 +115,6 @@ def main():
         replace_mdt=replace_mdt,
         rebuild=args.rebuild,
     )
-
-
-def subscription(mdt):
-
-    xpath = "/ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry"
-
-    return {
-        "config": {
-            "mdt-config-data": {
-                "@xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg",
-                "@operation": "replace",
-                "mdt-subscription": {
-                    "subscription-id": mdt["sub_id"],
-                    "base": {
-                        "stream": "yang-push",
-                        "encoding": "encode-kvgpb",
-                        "period": mdt["interval_s"] * 100,
-                        "xpath": xpath,
-                    },
-                    "mdt-receivers": {
-                        "address": mdt["collector_ip_addr"],
-                        "port": mdt["collector_grpc_port"],
-                        "protocol": "grpc-tcp",
-                    },
-                },
-            }
-        }
-    }
 
 
 def process_args():

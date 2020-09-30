@@ -1,0 +1,214 @@
+{
+  "aliasColors": {},
+  "bars": false,
+  "dashLength": 10,
+  "dashes": false,
+  "datasource": "Docker InfluxDB",
+  "fill": 0,
+  "gridPos": {
+    "h": 9,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  },
+  "id": {{ data['remote_node_id'] }},
+  "legend": {
+    "avg": false,
+    "current": false,
+    "max": false,
+    "min": false,
+    "show": true,
+    "total": false,
+    "values": false
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "connected",
+  "options": {},
+  "percentage": false,
+  "pointradius": 2,
+  "points": true,
+  "renderer": "flot",
+  "seriesOverrides": [],
+  "spaceLength": 10,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+    {
+      "alias": "RTT",
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        }
+      ],
+      "measurement": "Cisco-IOS-XE-ip-sla-oper:ip-sla-stats/sla-oper-entry",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "stats/rtt/sla_time_values/avg"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "mean"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "source",
+          "operator": "=",
+          "value": "{{ data['local_hostname'] }}"
+        },
+        {
+          "condition": "AND",
+          "key": "oper_id",
+          "operator": "=",
+          "value": "{{ data['remote_node_id'] }}"
+        }
+      ]
+    },
+    {
+      "alias": "Jitter",
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        }
+      ],
+      "measurement": "Cisco-IOS-XE-ip-sla-oper:ip-sla-stats/sla-oper-entry",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "B",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "stats/jitter/sd/avg"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "mean"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "source",
+          "operator": "=",
+          "value": "{{ data['local_hostname'] }}"
+        },
+        {
+          "condition": "AND",
+          "key": "oper_id",
+          "operator": "=",
+          "value": "{{ data['remote_node_id'] }}"
+        }
+      ]
+    },
+    {
+      "alias": "Latency",
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "null"
+          ],
+          "type": "fill"
+        }
+      ],
+      "measurement": "Cisco-IOS-XE-ip-sla-oper:ip-sla-stats/sla-oper-entry",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "C",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "stats/oneway_latency/sd/avg"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "mean"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "source",
+          "operator": "=",
+          "value": "{{ data['local_hostname'] }}"
+        },
+        {
+          "condition": "AND",
+          "key": "oper_id",
+          "operator": "=",
+          "value": "{{ data['remote_node_id'] }}"
+        }
+      ]
+    }
+  ],
+  "thresholds": [],
+  "timeFrom": null,
+  "timeRegions": [],
+  "timeShift": null,
+  "title": "{{ data['local_hostname'] }} to {{ data['remote_hostname'] }}",
+  "tooltip": {
+    "shared": true,
+    "sort": 0,
+    "value_type": "individual"
+  },
+  "type": "graph",
+  "xaxis": {
+    "buckets": null,
+    "mode": "time",
+    "name": null,
+    "show": true,
+    "values": []
+  },
+  "yaxes": [
+    {
+      "format": "short",
+      "label": "ms",
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    },
+    {
+      "format": "short",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    }
+  ],
+  "yaxis": {
+    "align": false,
+    "alignLevel": null
+  }
+}

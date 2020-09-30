@@ -20,6 +20,7 @@ devices:
       sub_id: 100
       interval_s: 60
       collector_ip_addr: 172.31.46.67
+      #collector_ip_addr: ~
       collector_grpc_port: 42518
 
 ios:
