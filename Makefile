@@ -1,8 +1,8 @@
-# Makefile targets simplify daily operatons:
+# Makefile targets simplify daily operatons
 
 .DEFAULT_GOAL := all
 .PHONY: all
-test:	clean lint run
+all:	clean lint run
 
 .PHONY: lint
 lint:
@@ -26,7 +26,7 @@ run:
 .PHONY: clean
 clean:
 	@echo "Starting  clean"
+	find . -name "*.pyc" -exec rm -rf {} \;
 	rm -rf outputs/
-	rm -rf *.pyc
 	rm -f nornir.log
 	@echo "Completed clean"
