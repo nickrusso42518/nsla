@@ -26,9 +26,21 @@ ios:
   platform: "ios"
   groups:
     - "devices"
+  data:
+    measurement:
+      base: "Cisco-IOS-XE-ip-sla-oper:ip-sla-stats/sla-oper-entry"
+      rtt: "stats/rtt/sla_time_values/avg"
+      jitter: "stats/jitter/sd/avg"
+      oneway: "stats/oneway_latency/sd/avg"
 
 iosxr:
   platform: "iosxr"
   groups:
     - "devices"
+  data:
+    measurement:
+      base: "TODO"
+      rtt: "TODO"
+      jitter: "TODO"
+      oneway: "TODO"
 ...

@@ -50,6 +50,7 @@ class ProcGrafanaDashboard(ProcBase):
 
             # Define data variables for jinja2 templates
             data = {
+                "measurement": remote_attr["measurement"],
                 "local_hostname": host.name,
                 "remote_hostname": remote_host,
                 "remote_node_id": remote_attr["node_id"],

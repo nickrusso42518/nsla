@@ -45,7 +45,7 @@
           "type": "time"
         }
       ],
-      "measurement": "Cisco-IOS-XE-ip-sla-oper:ip-sla-stats/sla-oper-entry",
+      "measurement": "{{ data['measurement']['base'] }}",
       "orderByTime": "ASC",
       "policy": "default",
       "refId": "A",
@@ -54,7 +54,7 @@
         [
           {
             "params": [
-              "stats/rtt/sla_time_values/avg"
+              "{{ data['measurement']['rtt'] }}"
             ],
             "type": "field"
           },
@@ -88,7 +88,7 @@
           "type": "time"
         }
       ],
-      "measurement": "Cisco-IOS-XE-ip-sla-oper:ip-sla-stats/sla-oper-entry",
+      "measurement": "{{ data['measurement']['base'] }}",
       "orderByTime": "ASC",
       "policy": "default",
       "refId": "B",
@@ -97,7 +97,7 @@
         [
           {
             "params": [
-              "stats/jitter/sd/avg"
+              "{{ data['measurement']['jitter'] }}"
             ],
             "type": "field"
           },
@@ -137,7 +137,7 @@
           "type": "fill"
         }
       ],
-      "measurement": "Cisco-IOS-XE-ip-sla-oper:ip-sla-stats/sla-oper-entry",
+      "measurement": "{{ data['measurement']['base'] }}",
       "orderByTime": "ASC",
       "policy": "default",
       "refId": "C",
@@ -146,7 +146,7 @@
         [
           {
             "params": [
-              "stats/oneway_latency/sd/avg"
+              "{{ data['measurement']['oneway'] }}"
             ],
             "type": "field"
           },
