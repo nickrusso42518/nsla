@@ -48,12 +48,11 @@ def main():
     init_nornir = InitNornir()
     nornir = init_nornir.with_processors([ProcJSON(), ProcCSV()])
 
-    # Build the SLA filter string in subtree format
-    sla_xmlns = "http://cisco.com/ns/yang/Cisco-IOS-XE-ip-sla-oper"
-    sla_filter = f'<ip-sla-stats xmlns="{sla_xmlns}"></ip-sla-stats>'
+    # Build the SLA filter string in xpath format
+    sla_filter = ("xpath", "/ip-sla-stats")
 
     # Perform the data collection using NETCONF with new filter
-    nornir.run(task=collect_sla_stats, sla_filter=("subtree", sla_filter))
+    nornir.run(task=collect_sla_stats, sla_filter=sla_filter)
 
 
 if __name__ == "__main__":

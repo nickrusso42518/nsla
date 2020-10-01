@@ -42,26 +42,10 @@ def main():
     nornir = InitNornir()
 
     # Define filter for collecting IP SLA configuration
-    sla_filter = (
-        "subtree",
-        """
-        <native>
-          <ip>
-            <sla xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-sla"/>
-          </ip>
-        </native>
-    """,
-    )
+    sla_filter = ("xpath", "/native/ip/sla")
 
     # Define filter for collecting MDT subscriptions
-    mdt_filter = (
-        "subtree",
-        """
-        <mdt-config-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg">
-          <mdt-subscription/>
-        </mdt-config-data>
-    """,
-    )
+    mdt_filter = ("xpath", "/mdt-config-data/mdt-subscription")
 
     # Run the get_config Nornir task with each filter
     nornir.run(task=get_config, nc_filter=sla_filter)
