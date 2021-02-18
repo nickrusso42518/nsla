@@ -90,19 +90,6 @@ There are two core scripts in this solution:
     to perform this rebuild. This uses a NETCONF `edit-config` using
     a `delete` operation to the SLA tree first.
 
-## Operations
-There are two core scripts in this solution:
-  * `collect_stats.py`: Once probes have been configured, run this script
-    to generate an on-demand performance report. See "Output Formats" for
-    additional details about these formats.
-  * `manage_probes.py`: Based on the variables just described, configures
-    the required SLA operations and telemetry subscriptions on each
-    device. Note that SLA operations cannot be completely reconfigured
-    after being defined, so changing a key parameter (such as destination
-    port) requires a probe to be deleted and re-added. Use the `-r` option
-    to perform this rebuild. This uses a NETCONF `edit-config` using
-    a `delete` operation to the SLA tree first.
-
 ## Output Formats
 The `collect_stats.py` script runs synchronously and creates two output
 files for each host in the inventory in the `outputs/` directory:

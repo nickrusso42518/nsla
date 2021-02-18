@@ -1,0 +1,19 @@
+ip sla 101
+ udp-jitter 10.0.0.101 16384
+  tos 184
+  verify-data
+  tag CSR1
+ip sla schedule 101 life forever start-time now
+ip sla 102
+ udp-jitter 10.0.0.102 16384
+  tos 184
+  verify-data
+  tag CSR2
+ip sla schedule 102 life forever start-time now
+ip sla responder
+telemetry ietf subscription 100
+ encoding encode-kvgpb
+ filter xpath /ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry
+ stream yang-push
+ update-policy periodic 6000
+ receiver ip address 172.31.46.67 42518 protocol grpc-tcp
